@@ -36,6 +36,6 @@ class LiveFragment : Fragment() {
         weekly_weather_view.layoutManager = layoutManager
         weekly_weather_view.hasFixedSize()
         weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyWeatherEntity1List)
-        weekly_weather_view.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
+        weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
     }
 }
