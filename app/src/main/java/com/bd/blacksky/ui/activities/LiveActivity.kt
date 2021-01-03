@@ -8,12 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bd.blacksky.R
 import com.bd.blacksky.ui.fragment.LiveFragment
-import com.bd.blacksky.ui.fragment.SplashFragment
 
 class LiveActivity : AppCompatActivity() {
 
     private val liveFragment = LiveFragment()
-    private val splashFragment = SplashFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +24,7 @@ class LiveActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(applicationContext, R.color.main_bg)
         window.navigationBarColor = ContextCompat.getColor(applicationContext, R.color.main_bg)
 
-        replaceFragment(splashFragment)
+        replaceFragment(liveFragment)
 
     }
 
