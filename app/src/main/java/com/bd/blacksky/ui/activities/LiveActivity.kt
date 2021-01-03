@@ -11,27 +11,40 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.bd.blacksky.R
+import com.bd.blacksky.databinding.ActivityLiveBinding
 import com.bd.blacksky.ui.fragment.LiveFragment
-import com.bd.blacksky.utils.PermissionUtils
+import com.bd.blacksky.utils.LocationPermission
 import com.bd.blacksky.viewmodels.LiveActivityToLiveFragmentSharedViewModel
+import com.bd.blacksky.viewmodels.factories.LiveActivityToLiveFragmentSharedViewModelFactory
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 import java.util.*
 
-class LiveActivity : AppCompatActivity() {
+class LiveActivity : AppCompatActivity(), KodeinAware {
 
     private val liveFragment = LiveFragment()
 
-    //create instance of MySpecialViewModel owned by My Lifecycle
-    private val liveActivityToLiveFragmentSharedViewModel by viewModels<LiveActivityToLiveFragmentSharedViewModel>()
+    //Dependancy injection
+    override val kodein by kodein()
+    private val liveActivityToLiveFragmentSharedViewModelFactory: LiveActivityToLiveFragmentSharedViewModelFactory by instance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_live)
+
+
+        val binding : ActivityLiveBinding = DataBindingUtil.setContentView(this,R.layout.activity_live)
+
+
 
         /* Changin the action bar color to mach the full background */
         val window: Window = this.window
@@ -59,8 +72,7 @@ class LiveActivity : AppCompatActivity() {
     private fun setUpLocationListener() {
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         // for getting the current location update after every 2 seconds with high accuracy
-        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000).setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
             object : LocationCallback() {
@@ -84,18 +96,18 @@ class LiveActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         when {
-            PermissionUtils.isAccessFineLocationGranted(this) -> {
+            LocationPermission.isAccessFineLocationGranted(this) -> {
                 when {
-                    PermissionUtils.isLocationEnabled(this) -> {
+                    LocationPermission.isLocationEnabled(this) -> {
                         setUpLocationListener()
                     }
                     else -> {
-                        PermissionUtils.showGPSNotEnabledDialog(this)
+                        LocationPermission.showGPSNotEnabledDialog(this)
                     }
                 }
             }
             else -> {
-                PermissionUtils.requestAccessFineLocationPermission(
+                LocationPermission.requestAccessFineLocationPermission(
                     this,
                     LOCATION_PERMISSION_REQUEST_CODE
                 )
@@ -109,16 +121,20 @@ class LiveActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val liveActivityToLiveFragmentSharedViewModel = ViewModelProviders.of(this,liveActivityToLiveFragmentSharedViewModelFactory).get(LiveActivityToLiveFragmentSharedViewModel::class.java)
+
+
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     when {
-                        PermissionUtils.isLocationEnabled(this) -> {
+                        LocationPermission.isLocationEnabled(this) -> {
                             setUpLocationListener()
-                            liveActivityToLiveFragmentSharedViewModel.setIsLocationPermissionsApproved(true)
+                            liveActivityToLiveFragmentSharedViewModel?.isLocationPermissionsApproved?.value = true
                         }
                         else -> {
-                            PermissionUtils.showGPSNotEnabledDialog(this)
+                            LocationPermission.showGPSNotEnabledDialog(this)
                         }
                     }
                 } else {
@@ -127,7 +143,7 @@ class LiveActivity : AppCompatActivity() {
                         getString(R.string.location_permission_not_granted),
                         Toast.LENGTH_LONG
                     ).show()
-                    liveActivityToLiveFragmentSharedViewModel.setIsLocationPermissionsApproved(false)
+                    liveActivityToLiveFragmentSharedViewModel?.isLocationPermissionsApproved?.value = false
                 }
             }
         }

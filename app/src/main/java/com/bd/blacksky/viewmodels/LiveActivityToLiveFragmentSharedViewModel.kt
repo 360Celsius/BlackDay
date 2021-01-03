@@ -1,15 +1,12 @@
 package com.bd.blacksky.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class LiveActivityToLiveFragmentSharedViewModel (application: Application): AndroidViewModel(application) {
+class LiveActivityToLiveFragmentSharedViewModel (): ViewModel() {
 
-    val isLocationPermissionsApproved = MutableLiveData<Boolean>() //typically private and exposed through method
-
-    fun setIsLocationPermissionsApproved(value: Boolean) {
-        isLocationPermissionsApproved.value = value //triggers observers
-    }
+    val isLocationPermissionsApproved : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
 }
+

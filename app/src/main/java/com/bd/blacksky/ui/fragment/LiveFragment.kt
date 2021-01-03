@@ -1,54 +1,60 @@
 package com.bd.blacksky.ui.fragment
 
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bd.blacksky.R
 import com.bd.blacksky.data.database.entities.WeeklyWeatherEntity
+import com.bd.blacksky.databinding.FragmentLiveBinding
 import com.bd.blacksky.ui.viewadapters.WeeklyWeatherViewAdapter
-import com.bd.blacksky.utils.PermissionUtils
 import com.bd.blacksky.viewmodels.LiveActivityToLiveFragmentSharedViewModel
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.bd.blacksky.viewmodels.factories.LiveActivityToLiveFragmentSharedViewModelFactory
 import kotlinx.android.synthetic.main.fragment_live.*
-import java.util.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.kcontext
 
-class LiveFragment : Fragment() {
+class LiveFragment : Fragment(), KodeinAware {
 
-    //creates or retrieves (if already exists) an instance of MySpecialViewModel owned by MyActivity Lifecycle (keyword "activityViewModels" rather then "viewModels"
-    //Note it will exist because it was created in activity already
-    private val liveActivityToLiveFragmentSharedViewModel by activityViewModels<LiveActivityToLiveFragmentSharedViewModel>()
+    private lateinit var binding: FragmentLiveBinding
+
+    final override val kodeinContext = kcontext<Fragment>(this)
+    final override val kodein: Kodein by kodein()
+
+    private val liveActivityToLiveFragmentSharedViewModelFactory: LiveActivityToLiveFragmentSharedViewModelFactory by instance()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater?.inflate(R.layout.fragment_live, container, false)
 
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live, container, false)
+        binding.setLifecycleOwner(this)
 
-        liveActivityToLiveFragmentSharedViewModel.isLocationPermissionsApproved.observe(viewLifecycleOwner, Observer { isLocationPermissionsApproved ->
-            
-        })
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val liveActivityToLiveFragmentSharedViewModel = activity?.let { ViewModelProviders.of(it, liveActivityToLiveFragmentSharedViewModelFactory).get(LiveActivityToLiveFragmentSharedViewModel::class.java) }
+
+
+        liveActivityToLiveFragmentSharedViewModel?.isLocationPermissionsApproved?.observe(viewLifecycleOwner, Observer { isLocationPermissionsApproved ->
+            Log.e("test", isLocationPermissionsApproved.toString())
+        })
 
         val weeklyWeatherEntity1List: List<WeeklyWeatherEntity> = listOf(
                 WeeklyWeatherEntity(0, "Tue, Apr 16", "1", "11\u00B0\""),

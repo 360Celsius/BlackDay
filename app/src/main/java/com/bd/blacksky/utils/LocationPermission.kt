@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bd.blacksky.R
 
-object PermissionUtils {
+object LocationPermission {
     /**
      * Function to request permission from the user
      */
