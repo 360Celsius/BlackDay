@@ -15,8 +15,6 @@ import com.bd.blacksky.R
 import com.bd.blacksky.data.database.entities.WeeklyWeatherEntity
 import com.bd.blacksky.databinding.FragmentLiveBinding
 import com.bd.blacksky.ui.viewadapters.WeeklyWeatherViewAdapter
-import com.bd.blacksky.viewmodels.LiveActivityToLiveFragmentSharedViewModel
-import com.bd.blacksky.viewmodels.factories.LiveActivityToLiveFragmentSharedViewModelFactory
 import kotlinx.android.synthetic.main.fragment_live.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -30,8 +28,6 @@ class LiveFragment : Fragment(), KodeinAware {
 
     final override val kodeinContext = kcontext<Fragment>(this)
     final override val kodein: Kodein by kodein()
-
-    private val liveActivityToLiveFragmentSharedViewModelFactory: LiveActivityToLiveFragmentSharedViewModelFactory by instance()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,14 +43,6 @@ class LiveFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        val liveActivityToLiveFragmentSharedViewModel = activity?.let { ViewModelProviders.of(it, liveActivityToLiveFragmentSharedViewModelFactory).get(LiveActivityToLiveFragmentSharedViewModel::class.java) }
-
-
-        liveActivityToLiveFragmentSharedViewModel?.isLocationPermissionsApproved?.observe(viewLifecycleOwner, Observer { isLocationPermissionsApproved ->
-            Log.e("test", isLocationPermissionsApproved.toString())
-        })
 
         val weeklyWeatherEntity1List: List<WeeklyWeatherEntity> = listOf(
                 WeeklyWeatherEntity(0, "Tue, Apr 16", "1", "11\u00B0\""),
