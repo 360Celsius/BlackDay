@@ -1,21 +1,27 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bd.blacksky.R
 import com.bd.blacksky.data.database.entities.WeeklyWeatherEntity
 import com.bd.blacksky.databinding.FragmentLiveBinding
 import com.bd.blacksky.ui.viewadapters.WeeklyWeatherViewAdapter
+import com.bd.blacksky.viewmodels.GeoLocationViewModel
+import com.bd.blacksky.viewmodels.factories.GeoLocationViewModelFactory
 import kotlinx.android.synthetic.main.fragment_live.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.kcontext
 
 class LiveFragment : Fragment(), KodeinAware {
@@ -25,6 +31,8 @@ class LiveFragment : Fragment(), KodeinAware {
     final override val kodeinContext = kcontext<Fragment>(this)
     final override val kodein: Kodein by kodein()
 
+    private val geoLocationViewModelFactory: GeoLocationViewModelFactory by instance()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -33,6 +41,15 @@ class LiveFragment : Fragment(), KodeinAware {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live, container, false)
         binding.setLifecycleOwner(this)
 
+
+        val geoLocationViewModel = ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
+        geoLocationViewModel.getGeoLocation()
+
+        geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
+            if(geoLocation!=null) {
+                Log.e("test", geoLocation.country_name.toString())
+            }
+        })
 
         return binding.root
     }
