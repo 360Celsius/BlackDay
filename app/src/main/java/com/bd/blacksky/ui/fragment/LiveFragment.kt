@@ -44,8 +44,6 @@ class LiveFragment : Fragment(), KodeinAware {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live, container, false)
         binding.setLifecycleOwner(this)
 
-
-        //val geoLocationViewModel = ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
         geoLocationViewModel.getGeoLocation()
 
         geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
