@@ -33,6 +33,9 @@ class LiveFragment : Fragment(), KodeinAware {
 
     private val geoLocationViewModelFactory: GeoLocationViewModelFactory by instance()
 
+    val geoLocationViewModel: GeoLocationViewModel by lazy {
+        ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -42,7 +45,7 @@ class LiveFragment : Fragment(), KodeinAware {
         binding.setLifecycleOwner(this)
 
 
-        val geoLocationViewModel = ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
+        //val geoLocationViewModel = ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
         geoLocationViewModel.getGeoLocation()
 
         geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
