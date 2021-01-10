@@ -10,12 +10,15 @@ import androidx.fragment.app.Fragment
 import com.bd.blacksky.R
 import com.bd.blacksky.databinding.ActivityLiveBinding
 import com.bd.blacksky.ui.fragment.LiveFragment
+import com.bd.blacksky.ui.fragment.SplashFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 
 class LiveActivity : AppCompatActivity(), KodeinAware {
 
     private val liveFragment = LiveFragment()
+    private val splashFragment = SplashFragment()
+
 
     //Dependancy injection
     override val kodein by kodein()
@@ -35,7 +38,7 @@ class LiveActivity : AppCompatActivity(), KodeinAware {
         window.statusBarColor = ContextCompat.getColor(applicationContext, R.color.main_bg)
         window.navigationBarColor = ContextCompat.getColor(applicationContext, R.color.main_bg)
 
-        replaceFragment(liveFragment)
+        replaceFragment(splashFragment)
 
     }
 
