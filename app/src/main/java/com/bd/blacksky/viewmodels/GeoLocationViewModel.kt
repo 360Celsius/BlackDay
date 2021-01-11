@@ -34,7 +34,7 @@ class GeoLocationViewModel(
                 geoLocationRepository.saveGeoLocationToDB(geoLocationEntity)
 
             }catch (e: Exception){
-                Log.e("test", "something went wrong")
+                Log.e("Coroutines Error", e.toString())
             }
         }
     }
