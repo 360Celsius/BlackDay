@@ -1,18 +1,16 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bd.blacksky.R
-import com.bd.blacksky.data.database.entities.WeeklyWeatherEntity
+import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
 import com.bd.blacksky.databinding.FragmentLiveBinding
 import com.bd.blacksky.ui.viewadapters.WeeklyWeatherViewAdapter
 import com.bd.blacksky.viewmodels.GeoLocationViewModel
@@ -59,17 +57,17 @@ class LiveFragment : Fragment(), KodeinAware {
 //            }
 //        })
 
-        val weeklyWeatherEntity1List: List<WeeklyWeatherEntity> = listOf(
-                WeeklyWeatherEntity(0, "Tue, Apr 16", "1", "11\u00B0\""),
-                WeeklyWeatherEntity(1, "Wed, Apr 17", "2", "16\\u00B0\""),
-                WeeklyWeatherEntity(1, "Thu, Apr 18", "3", "23\\u00B0\""),
-                WeeklyWeatherEntity(1, "Fri, Apr 19", "4", "26\\u00B0\"")
+        val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = listOf(
+                WeeklyDayWeatherEntity(0, 0,1610269200,283.19, 293.31, "clear sky","Clear"),
+                WeeklyDayWeatherEntity(1, 1,1610269200,283.19, 293.31, "clear sky","Clear"),
+                WeeklyDayWeatherEntity(1, 2,1610269200,283.19, 293.31, "clear sky","Clear"),
+                WeeklyDayWeatherEntity(1, 3,1161026920, 293.31, 293.31,"clear sky","Clear")
         )
 
         val layoutManager = LinearLayoutManager(context)
         weekly_weather_view.layoutManager = layoutManager
         weekly_weather_view.hasFixedSize()
-        weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyWeatherEntity1List)
+        weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List)
         weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
     }
 

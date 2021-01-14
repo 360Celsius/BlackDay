@@ -7,12 +7,12 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bd.blacksky.R
-import com.bd.blacksky.data.database.entities.WeeklyWeatherEntity
+import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
 import com.bd.blacksky.databinding.WeekyWeatherListItemBinding
 
-class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyWeatherEntity>) : RecyclerView.Adapter<WeeklyWeatherViewAdapter.ViewHolder>() {
+class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>) : RecyclerView.Adapter<WeeklyWeatherViewAdapter.ViewHolder>() {
 
-    private var items: List<WeeklyWeatherEntity> = cryptoUsdData
+    private var items: List<WeeklyDayWeatherEntity> = cryptoUsdData
 
     private val loading = 0
     private val item = 1
@@ -25,11 +25,11 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyWeatherEntity>) : Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (holder is ItemViewHolder && items.size > position) {
-            holder.bind(items[position].date.toString(), items[position].image.toString(), items[position].temp.toString())
+           // holder.bind(items[position].date.toString(), items[position].image.toString(), items[position].temp.toString())
         }
     }
 
-    fun update(items: List<WeeklyWeatherEntity>) {
+    fun update(items: List<WeeklyDayWeatherEntity>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -37,7 +37,7 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyWeatherEntity>) : Recy
     companion object {
         @JvmStatic
         @BindingAdapter("items")
-        fun RecyclerView.bindItems(items: List<WeeklyWeatherEntity>) {
+        fun RecyclerView.bindItems(items: List<WeeklyDayWeatherEntity>) {
             val adapter = adapter as WeeklyWeatherViewAdapter
             adapter.update(items)
         }

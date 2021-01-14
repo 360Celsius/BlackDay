@@ -4,17 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.bd.blacksky.data.database.dao.CurrentWeatherDao
 import com.bd.blacksky.data.database.dao.GeoLocationDao
+import com.bd.blacksky.data.database.dao.WeeklyWeatherDao
+import com.bd.blacksky.data.database.entities.CurrentWeatherEntity
 import com.bd.blacksky.data.database.entities.GeoLocationEntity
+import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
 
 @Database(
-        entities = [GeoLocationEntity::class],
+        entities = [GeoLocationEntity::class, CurrentWeatherEntity::class, WeeklyDayWeatherEntity::class],
         version = 1
 )
 
 abstract class BlackDayDataBase : RoomDatabase() {
 
     abstract fun getGeoLocationDao(): GeoLocationDao
+    abstract fun getCurrentWeathernDao(): CurrentWeatherDao
+    abstract fun getWeeklyWeatherDao(): WeeklyWeatherDao
 
 
     companion object{

@@ -18,7 +18,7 @@ class GeoLocationViewModel(
             try{
 
                 val geolocationResponse: Response<GeoLocationDataModel> = geoLocationRepository.getGeoLocationFromAPI()
-                Log.e("test", geolocationResponse.body()?.country_name.toString())
+                Log.e("test", "GeoLocationViewModel " + geolocationResponse.body()?.country_name.toString())
 
                 val geoLocationEntity: GeoLocationEntity = GeoLocationEntity(
                     0,
@@ -42,4 +42,5 @@ class GeoLocationViewModel(
     fun getGeoLocationFromDM(): LiveData<GeoLocationEntity>{
         return geoLocationRepository.getGeoLocationFromDM()
     }
+
 }

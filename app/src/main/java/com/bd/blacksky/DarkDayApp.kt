@@ -27,7 +27,7 @@ class DarkDayApp : Application(), KodeinAware {
         bind() from singleton { BlackDayDataBase(instance()) }
 
         bind() from singleton { GeoLocationRepository(instance(),instance()) }
-        bind() from singleton { WeatherRepository(instance()) }
+        bind() from singleton { WeatherRepository(instance(),instance()) }
 
         bind() from singleton { GeoLocationViewModelFactory(instance()) }
         bind() from singleton { WeatherViewModelFactory(instance()) }

@@ -11,7 +11,7 @@ data class WeeklyWeatherDataModel(
 )
 
 data class Current(
-        var dt: Double?,
+        var dt: Int?,
         var sunrise: Double?,
         var sunset: Double?,
         var temp: Double?,
@@ -35,7 +35,7 @@ data class Weather(
 )
 
 data class Hourly(
-        var dt: Double?,
+        var dt: Int?,
         var temp: Double?,
         var feels_like: Double?,
         var pressure: Double?,
@@ -50,7 +50,7 @@ data class Hourly(
 )
 
 data class Daily (
-        var dt: Double?,
+        var dt: Int?,
         var sunrise: Double?,
         var sunset: Double?,
         var temp: Temp?,
