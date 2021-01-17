@@ -7,18 +7,21 @@ import com.bd.blacksky.data.database.entities.GeoLocationEntity
 import com.bd.blacksky.data.network.datamodels.GeoLocationDataModel
 import com.bd.blacksky.repositories.GeoLocationRepository
 import com.bd.blacksky.utils.Coroutines
+import com.bd.blacksky.utils.SingleLiveEvent
 import retrofit2.Response
 
 class GeoLocationViewModel(
         private val geoLocationRepository: GeoLocationRepository
 ): ViewModel() {
 
+    val isEventFinishedGeoLocationViewModel = SingleLiveEvent<Boolean>()
+
     fun getGeoLocation(){
         Coroutines.backGround {
             try{
 
                 val geolocationResponse: Response<GeoLocationDataModel> = geoLocationRepository.getGeoLocationFromAPI()
-                Log.e("test", "GeoLocationViewModel " + geolocationResponse.body()?.country_name.toString())
+                //Log.e("test", "GeoLocationViewModel " + geolocationResponse.body()?.country_name.toString())
 
                 val geoLocationEntity: GeoLocationEntity = GeoLocationEntity(
                     0,
@@ -32,6 +35,7 @@ class GeoLocationViewModel(
                     geolocationResponse.body()?.state.toString()
                 )
                 geoLocationRepository.saveGeoLocationToDB(geoLocationEntity)
+                isEventFinishedGeoLocationViewModel.value = true
 
             }catch (e: Exception){
                 Log.e("Coroutines Error", e.toString())
@@ -42,5 +46,6 @@ class GeoLocationViewModel(
     fun getGeoLocationFromDM(): LiveData<GeoLocationEntity>{
         return geoLocationRepository.getGeoLocationFromDM()
     }
+
 
 }

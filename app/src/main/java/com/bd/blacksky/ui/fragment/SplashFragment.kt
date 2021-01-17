@@ -1,6 +1,7 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,17 +56,23 @@ class SplashFragment : Fragment(), KodeinAware {
 
         geoLocationViewModel.getGeoLocation()
 
-
-        geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
-            if(geoLocation!=null) {
-                weatherViewModel.getWeather(geoLocation.latitude.toString(),geoLocation.longitude.toString(),"aa2df23d347d91a01f286584e35f2b7e")
+        geoLocationViewModel.isEventFinishedGeoLocationViewModel.observe(viewLifecycleOwner, Observer { isEventFinishedGeoLocationViewModel ->
+            if(isEventFinishedGeoLocationViewModel){
+                geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
+                    if(geoLocation!=null) {
+                        weatherViewModel.getWeather(geoLocation.latitude.toString(),geoLocation.longitude.toString(),"aa2df23d347d91a01f286584e35f2b7e")
+                    }
+                })
             }
         })
 
 
+        weatherViewModel.isEventFinishedWeatherViewModel.observe(viewLifecycleOwner, Observer { isEventFinishedWeatherViewModel ->
+            if(isEventFinishedWeatherViewModel) {
+
+            }
+        })
+
     }
-
-
-
 
 }

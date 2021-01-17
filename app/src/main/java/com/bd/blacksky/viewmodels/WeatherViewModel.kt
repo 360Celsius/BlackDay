@@ -7,11 +7,15 @@ import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
 import com.bd.blacksky.data.network.datamodels.WeeklyWeatherDataModel
 import com.bd.blacksky.repositories.WeatherRepository
 import com.bd.blacksky.utils.Coroutines
+import com.bd.blacksky.utils.SingleLiveEvent
 import retrofit2.Response
 
 class WeatherViewModel(
         private val weatherRepository: WeatherRepository
 ): ViewModel() {
+
+    val isEventFinishedWeatherViewModel = SingleLiveEvent<Boolean>()
+
 
     fun getWeather(lat: String,lon: String,appid: String){
         Coroutines.backGround {
@@ -45,7 +49,9 @@ class WeatherViewModel(
                     weatherRepository.saveWeeklyDayWeatherToDB(weeklyDayWeatherEntity)
                 }
 
-                Log.e("test", "WeatherViewModel "+ weatherResponce.body()?.timezone.toString())
+                isEventFinishedWeatherViewModel.value = true
+
+                //Log.e("test", "WeatherViewModel "+ weatherResponce.body()?.timezone.toString())
             }catch (e: Exception){
                 Log.e("Coroutines Error", e.toString())
             }
