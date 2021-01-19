@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bd.blacksky.R
 import com.bd.blacksky.databinding.FragmentSplashBinding
 import com.bd.blacksky.viewmodels.GeoLocationViewModel
+import com.bd.blacksky.viewmodels.SharedViewModel
 import com.bd.blacksky.viewmodels.WeatherViewModel
 import com.bd.blacksky.viewmodels.factories.GeoLocationViewModelFactory
+import com.bd.blacksky.viewmodels.factories.SharedViewModelFactory
 import com.bd.blacksky.viewmodels.factories.WeatherViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -30,7 +33,7 @@ class SplashFragment : Fragment(), KodeinAware {
 
     private val geoLocationViewModelFactory: GeoLocationViewModelFactory by instance()
     private val weatherViewModelFactory: WeatherViewModelFactory by instance()
-
+    private val sharedViewModelFactory: SharedViewModelFactory by instance()
 
     val geoLocationViewModel: GeoLocationViewModel by lazy {
         ViewModelProviders.of(this, geoLocationViewModelFactory).get(GeoLocationViewModel::class.java)
@@ -38,6 +41,10 @@ class SplashFragment : Fragment(), KodeinAware {
 
     val weatherViewModel: WeatherViewModel by lazy {
         ViewModelProviders.of(this, weatherViewModelFactory).get(WeatherViewModel::class.java)
+    }
+
+    val sharedViewModel: SharedViewModel by lazy {
+        ViewModelProvider(requireActivity(), sharedViewModelFactory).get(SharedViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,7 +76,7 @@ class SplashFragment : Fragment(), KodeinAware {
 
         weatherViewModel.isEventFinishedWeatherViewModel.observe(viewLifecycleOwner, Observer { isEventFinishedWeatherViewModel ->
             if(isEventFinishedWeatherViewModel) {
-
+                sharedViewModel.setData(true)
             }
         })
 

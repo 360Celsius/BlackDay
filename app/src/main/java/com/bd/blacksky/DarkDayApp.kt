@@ -7,6 +7,7 @@ import com.bd.blacksky.data.network.WeatherAPI
 import com.bd.blacksky.repositories.GeoLocationRepository
 import com.bd.blacksky.repositories.WeatherRepository
 import com.bd.blacksky.viewmodels.factories.GeoLocationViewModelFactory
+import com.bd.blacksky.viewmodels.factories.SharedViewModelFactory
 import com.bd.blacksky.viewmodels.factories.WeatherViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -31,6 +32,7 @@ class DarkDayApp : Application(), KodeinAware {
 
         bind() from singleton { GeoLocationViewModelFactory(instance()) }
         bind() from singleton { WeatherViewModelFactory(instance()) }
+        bind() from singleton { SharedViewModelFactory() }
 
     }
 }
