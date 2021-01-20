@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bd.blacksky.R
 import com.bd.blacksky.databinding.FragmentSplashBinding
+import com.bd.blacksky.utils.CountriesCodes
 import com.bd.blacksky.viewmodels.GeoLocationViewModel
 import com.bd.blacksky.viewmodels.SharedViewModel
 import com.bd.blacksky.viewmodels.WeatherViewModel
@@ -67,7 +68,21 @@ class SplashFragment : Fragment(), KodeinAware {
             if(isEventFinishedGeoLocationViewModel){
                 geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
                     if(geoLocation!=null) {
-                        weatherViewModel.getWeather(geoLocation.latitude.toString(),geoLocation.longitude.toString(),"aa2df23d347d91a01f286584e35f2b7e")
+                        if(geoLocation.latitude.toString().equals(CountriesCodes.UNITED_STATES_MINOR_OUTLIYING_ISLANDS.countryCode,true) || geoLocation.latitude.toString().equals(CountriesCodes.UNITED_STATES_OF_AMERICA.countryCode,true)
+                                || geoLocation.latitude.toString().equals(CountriesCodes.PALAU.countryCode,true) || geoLocation.latitude.toString().equals(CountriesCodes.BAHAMAS.countryCode,true)) {
+                            weatherViewModel.getWeather(
+                                geoLocation?.latitude.toString(),
+                                geoLocation?.longitude.toString(),
+                                "aa2df23d347d91a01f286584e35f2b7e",
+                                "imperial"
+                            )
+                        }else{
+                            weatherViewModel.getWeather(
+                                geoLocation?.latitude.toString(),
+                                geoLocation?.longitude.toString(),
+                                "aa2df23d347d91a01f286584e35f2b7e",
+                                "metric")
+                        }
                     }
                 })
             }

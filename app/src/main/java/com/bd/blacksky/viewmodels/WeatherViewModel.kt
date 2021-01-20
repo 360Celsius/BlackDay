@@ -1,6 +1,7 @@
 package com.bd.blacksky.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bd.blacksky.data.database.entities.CurrentWeatherEntity
 import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
@@ -17,10 +18,10 @@ class WeatherViewModel(
     val isEventFinishedWeatherViewModel = SingleLiveEvent<Boolean>()
 
 
-    fun getWeather(lat: String,lon: String,appid: String){
+    fun getWeather(lat: String,lon: String,appid: String,units: String){
         Coroutines.backGround {
             try{
-                val weatherResponce: Response<WeeklyWeatherDataModel>  = weatherRepository.getWeatherFromAPI(lat,lon,appid)
+                val weatherResponce: Response<WeeklyWeatherDataModel>  = weatherRepository.getWeatherFromAPI(lat,lon,appid,units)
 
                 val currurentWeatherEntityRandomId: Int =  (0..100).random()
                 val currentWeatherEntity: CurrentWeatherEntity = CurrentWeatherEntity(
@@ -58,4 +59,11 @@ class WeatherViewModel(
         }
     }
 
+    fun getCurrentWeatherFromDB(): LiveData<CurrentWeatherEntity> {
+        return weatherRepository.getCurrentWeatherFromDM()
+    }
+
+    fun getWeeklyWeatherFromDB(id:Int): LiveData<List<WeeklyDayWeatherEntity>> {
+        return weatherRepository.getWeeklyWeatherFromDM(id)
+    }
 }

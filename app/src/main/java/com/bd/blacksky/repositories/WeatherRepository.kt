@@ -12,8 +12,8 @@ class WeatherRepository(
         private val blackDayDataBase: BlackDayDataBase,
         private val weatherAPI: WeatherAPI
 ) {
-    suspend fun getWeatherFromAPI(lat: String,lon: String,appid: String): Response<WeeklyWeatherDataModel>{
-        val weatherFromAPI: Response<WeeklyWeatherDataModel> = weatherAPI.getWeeklyWeather(lat,lon,appid)
+    suspend fun getWeatherFromAPI(lat: String,lon: String,appid: String, units: String): Response<WeeklyWeatherDataModel>{
+        val weatherFromAPI: Response<WeeklyWeatherDataModel> = weatherAPI.getWeeklyWeather(lat,lon,appid, units)
         return weatherFromAPI
     }
 

@@ -14,7 +14,8 @@ interface WeatherAPI {
     suspend fun getWeeklyWeather(
             @Query("lat") lat: String,
             @Query("lon") lon: String,
-            @Query("appid") appid: String
+            @Query("appid") appid: String,
+            @Query("units") units: String
     ): Response<WeeklyWeatherDataModel>
 
     companion object{
