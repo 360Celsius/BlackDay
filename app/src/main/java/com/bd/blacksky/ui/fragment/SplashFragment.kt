@@ -1,7 +1,6 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,14 +73,14 @@ class SplashFragment : Fragment(), KodeinAware {
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                Keys.apiKey(),
+                                Keys.apiKeyWeather(),
                                 "imperial"
                             )
                         }else{
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                Keys.apiKey(),
+                                Keys.apiKeyWeather(),
                                 "metric")
                         }
                     }

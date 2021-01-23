@@ -5,5 +5,5 @@ object Keys {
         System.loadLibrary("native-lib")
     }
 
-    external fun apiKey(): String
+    external fun apiKeyWeather(): String
 }
