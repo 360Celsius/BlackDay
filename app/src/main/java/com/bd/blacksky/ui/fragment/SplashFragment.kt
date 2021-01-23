@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bd.blacksky.R
 import com.bd.blacksky.databinding.FragmentSplashBinding
 import com.bd.blacksky.utils.CountriesCodes
+import com.bd.blacksky.utils.Keys
 import com.bd.blacksky.viewmodels.GeoLocationViewModel
 import com.bd.blacksky.viewmodels.SharedViewModel
 import com.bd.blacksky.viewmodels.WeatherViewModel
@@ -73,14 +74,14 @@ class SplashFragment : Fragment(), KodeinAware {
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                "aa2df23d347d91a01f286584e35f2b7e",
+                                Keys.apiKey(),
                                 "imperial"
                             )
                         }else{
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                "aa2df23d347d91a01f286584e35f2b7e",
+                                Keys.apiKey(),
                                 "metric")
                         }
                     }
