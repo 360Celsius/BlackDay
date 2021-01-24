@@ -66,4 +66,8 @@ class WeatherViewModel(
     fun getWeeklyWeatherFromDB(id:Int): LiveData<List<WeeklyDayWeatherEntity>> {
         return weatherRepository.getWeeklyWeatherFromDM(id)
     }
+
+    fun getAllWeeklyWeatherFromDB(): LiveData<List<WeeklyDayWeatherEntity>> {
+        return weatherRepository.getAllWeeklyWeatherFromDM()
+    }
 }

@@ -1,6 +1,7 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,21 +81,22 @@ class LiveFragment : Fragment(), KodeinAware {
 
                 weather_description.text = currentWeather.main.toString()
                 wind_data.text = currentWeather.wind_speed.toString() + " m/s"
+
+
+                val currurentWeatherEntityRandomId: Int = currentWeather.current_day_id?.toInt() ?: -1
+                weatherViewModel.getAllWeeklyWeatherFromDB().observe(viewLifecycleOwner, Observer { weeklyWeather ->
+                    val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = weeklyWeather.subList(1,5)
+
+                    val layoutManager = LinearLayoutManager(context)
+                    weekly_weather_view.layoutManager = layoutManager
+                    weekly_weather_view.hasFixedSize()
+                    weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List,metric.toString())
+                    weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
+                })
             }
         })
 
-        val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = listOf(
-                WeeklyDayWeatherEntity(0, 0,1610269200,283.19, 293.31, "clear sky","Clear"),
-                WeeklyDayWeatherEntity(1, 1,1610269200,283.19, 293.31, "clear sky","Clear"),
-                WeeklyDayWeatherEntity(1, 2,1610269200,283.19, 293.31, "clear sky","Clear"),
-                WeeklyDayWeatherEntity(1, 3,1161026920, 293.31, 293.31,"clear sky","Clear")
-        )
 
-        val layoutManager = LinearLayoutManager(context)
-        weekly_weather_view.layoutManager = layoutManager
-        weekly_weather_view.hasFixedSize()
-        weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List)
-        weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
     }
 
 

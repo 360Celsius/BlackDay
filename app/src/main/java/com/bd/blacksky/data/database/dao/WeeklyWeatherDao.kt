@@ -15,4 +15,7 @@ interface WeeklyWeatherDao {
 
     @Query("SELECT * FROM weekly_weather_entity WHERE id IN(:id) ")
     fun getWeeklyWeatherFromDB(id: Int): LiveData<List<WeeklyDayWeatherEntity>>
+
+    @Query("SELECT * FROM weekly_weather_entity")
+    fun getAllWeeklyWeatherFromDB(): LiveData<List<WeeklyDayWeatherEntity>>
 }

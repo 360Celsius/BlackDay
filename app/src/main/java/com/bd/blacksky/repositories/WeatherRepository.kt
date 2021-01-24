@@ -33,4 +33,8 @@ class WeatherRepository(
     fun getWeeklyWeatherFromDM(id: Int): LiveData<List<WeeklyDayWeatherEntity>>{
         return  blackDayDataBase.getWeeklyWeatherDao().getWeeklyWeatherFromDB(id)
     }
+
+    fun getAllWeeklyWeatherFromDM(): LiveData<List<WeeklyDayWeatherEntity>>{
+        return  blackDayDataBase.getWeeklyWeatherDao().getAllWeeklyWeatherFromDB()
+    }
 }
