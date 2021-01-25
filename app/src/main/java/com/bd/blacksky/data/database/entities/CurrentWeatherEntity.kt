@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "current_weather_entity")
 data class CurrentWeatherEntity (
         @PrimaryKey
-        var id: Int,
+        var key_id: Int,
         @ColumnInfo(name = "current_day_id") var current_day_id: Int?,
         @ColumnInfo(name = "temp") var temp: Double?,
         @ColumnInfo(name = "wind_speed") var wind_speed: Double?,
         @ColumnInfo(name = "description") var description: String?,
         @ColumnInfo(name = "main") var main: String?,
+        @ColumnInfo(name = "id") var weather_id: Int?
 )

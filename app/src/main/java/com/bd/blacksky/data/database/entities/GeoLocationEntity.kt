@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "geo_location_entity")
 data class GeoLocationEntity (
         @PrimaryKey
-        var id: Int,
+        var key_id: Int,
         @ColumnInfo(name = "country_code") var country_code: String?,
         @ColumnInfo(name = "country_name") var country_name: String?,
         @ColumnInfo(name = "city") var city: String?,

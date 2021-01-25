@@ -1,7 +1,6 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.kcontext
+import java.util.*
 
 class LiveFragment : Fragment(), KodeinAware {
 
@@ -66,6 +66,7 @@ class LiveFragment : Fragment(), KodeinAware {
                 city_name.text = geoLocation.state.toString()
                 country_name.text = geoLocation.country_name.toString()
                 metric = geoLocation.country_code.toString()
+                time_of_day.text = getGreetingMessage()
             }
         })
 
@@ -81,9 +82,10 @@ class LiveFragment : Fragment(), KodeinAware {
 
                 weather_description.text = currentWeather.main.toString()
                 wind_data.text = currentWeather.wind_speed.toString() + " m/s"
+                weather_animation.setAnimation( getWeatherConditionCode ( currentWeather.weather_id ) )
 
 
-                val currurentWeatherEntityRandomId: Int = currentWeather.current_day_id?.toInt() ?: -1
+                //val currurentWeatherEntityRandomId: Int = currentWeather.current_day_id?.toInt() ?: -1
                 weatherViewModel.getAllWeeklyWeatherFromDB().observe(viewLifecycleOwner, Observer { weeklyWeather ->
                     val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = weeklyWeather.subList(1,5)
 
@@ -99,6 +101,35 @@ class LiveFragment : Fragment(), KodeinAware {
 
     }
 
+    fun getGreetingMessage():String{
+        val c = Calendar.getInstance()
+        val timeOfDay = c.get(Calendar.HOUR_OF_DAY)
 
+        return when (timeOfDay) {
+            in 0..11 -> resources.getString(R.string.morning)
+            in 12..15 -> resources.getString(R.string.afternoon)
+            in 16..20 -> resources.getString(R.string.evening)
+            in 21..23 -> resources.getString(R.string.night)
+            else -> resources.getString(R.string.today)
+        }
+    }
+
+    fun getWeatherConditionCode(code: Int?): String{
+
+        return when (code){
+            in 200..232 -> "thunder.json"
+            in 300..321 -> "strong_showers.json"
+            500 -> "light_rain.json"
+            in 500..531 -> "rain.json"
+            600 -> "light_snow.json"
+            615 -> "rain_and_snow.json"
+            in 600..622 -> "snow.json"
+            in 700..781 -> "fog.json"
+            800 -> "sunny.json"
+            801 -> "clouds.json"
+            in 800..804 -> "clouds.json"
+            else -> ""
+        }
+    }
 
 }

@@ -38,12 +38,12 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>, met
                 || metric.equals(CountriesCodes.PALAU.countryCode,true) || metric.equals(
                     CountriesCodes.BAHAMAS.countryCode,true)){
 
-                holder.bind(dateFormatter( items[position].dt?.toString() ).toString() , "items[position].image.toString()", items[position].min?.toInt().toString() + "\u2109 " +
+                holder.bind(dateFormatter( items[position].dt?.toString() ).toString() , getWeatherConditionCode (  items[position].weather_id ), items[position].min?.toInt().toString() + "\u2109 " +
                         items[position].max?.toInt().toString() + "\u2109" )
 
             }else{
 
-                holder.bind(dateFormatter( items[position].dt?.toString() ).toString() , "items[position].image.toString()", items[position].min?.toInt().toString() + "\u00B0 " +
+                holder.bind(dateFormatter( items[position].dt?.toString() ).toString() , getWeatherConditionCode (  items[position].weather_id ), items[position].min?.toInt().toString() + "\u00B0 " +
                         items[position].max?.toInt().toString() + "\u00B0" )
             }
         }
@@ -81,6 +81,7 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>, met
         fun bind(date: String, image: String, temp: String) {
             binding.date.text = date
             //binding.image.text = image
+            binding.image.setAnimation( image )
             binding.temp.text = temp
         }
     }
@@ -109,5 +110,22 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>, met
             e.printStackTrace()
         }
         return outputDateString
+    }
+
+    fun getWeatherConditionCode(code: Int?): String{
+
+        return when (code){
+            in 200..232 -> "thunder.json"
+            in 300..321 -> "strong_showers.json"
+            500 -> "light_rain.json"
+            in 500..531 -> "rain.json"
+            600 -> "light_snow.json"
+            615 -> "rain_and_snow.json"
+            in 600..622 -> "snow.json"
+            in 700..781 -> "fog.json"
+            800 -> "sunny.json"
+            in 800..804 -> "clouds.json"
+            else -> ""
+        }
     }
 }

@@ -30,7 +30,8 @@ class WeatherViewModel(
                         weatherResponce.body()?.current?.temp,
                         weatherResponce.body()?.current?.wind_speed,
                         weatherResponce.body()?.current?.weather?.get(0)?.description,
-                        weatherResponce.body()?.current?.weather?.get(0)?.main
+                        weatherResponce.body()?.current?.weather?.get(0)?.main,
+                        weatherResponce.body()?.current?.weather?.get(0)?.id
                 )
 
                 weatherRepository.saveCurrentWeatherToDB(currentWeatherEntity)
@@ -45,7 +46,8 @@ class WeatherViewModel(
                             weatherResponce.body()?.daily?.get(i)?.temp?.min,
                             weatherResponce.body()?.daily?.get(i)?.temp?.max,
                             weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.description.toString(),
-                            weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.main.toString()
+                            weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.main.toString(),
+                            weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.id
                     )
                     weatherRepository.saveWeeklyDayWeatherToDB(weeklyDayWeatherEntity)
                 }
