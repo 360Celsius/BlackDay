@@ -73,14 +73,14 @@ class SplashFragment : Fragment(), KodeinAware {
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                Keys.apiKeyWeather(),
+                                "aa2df23d347d91a01f286584e35f2b7e",
                                 "imperial"
                             )
                         }else{
                             weatherViewModel.getWeather(
                                 geoLocation?.latitude.toString(),
                                 geoLocation?.longitude.toString(),
-                                Keys.apiKeyWeather(),
+                                "aa2df23d347d91a01f286584e35f2b7e",
                                 "metric")
                         }
                     }

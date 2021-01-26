@@ -25,13 +25,97 @@
   },
   {
     "level": "INFO",
-    "message": "JSON \u0027/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/arm64-v8a/android_gradle_build.json\u0027 was up-to-date",
+    "message": "rebuilding JSON /Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/arm64-v8a/android_gradle_build.json due to:",
     "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
     "tag": "release|arm64-v8a"
   },
   {
     "level": "INFO",
-    "message": "JSON generation completed without problems",
+    "message": "- a dependent build file changed",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "  - /Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "keeping json folder \u0027/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/arm64-v8a\u0027 but regenerating project",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "executing cmake Executable : /Users/dennisshar/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake\narguments : \n-H/Users/dennisshar/MyProjects/BlackDay/app\n-DCMAKE_FIND_ROOT_PATH\u003d/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/prefab/arm64-v8a/prefab\n-DCMAKE_BUILD_TYPE\u003dRelease\n-DCMAKE_TOOLCHAIN_FILE\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake\n-DANDROID_ABI\u003darm64-v8a\n-DANDROID_NDK\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462\n-DANDROID_PLATFORM\u003dandroid-24\n-DCMAKE_ANDROID_ARCH_ABI\u003darm64-v8a\n-DCMAKE_ANDROID_NDK\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462\n-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/dennisshar/MyProjects/BlackDay/app/build/intermediates/cmake/release/obj/arm64-v8a\n-DCMAKE_MAKE_PROGRAM\u003d/Users/dennisshar/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja\n-DCMAKE_SYSTEM_NAME\u003dAndroid\n-DCMAKE_SYSTEM_VERSION\u003d24\n-B/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/arm64-v8a\n-GNinja\njvmArgs : \n\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "[\u003d\u003d \"CMake Server\" \u003d\u003d[\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"supportedProtocolVersions\":[{\"isExperimental\":true,\"major\":1,\"minor\":1}],\"type\":\"hello\"}\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "]\u003d\u003d \"CMake Server\" \u003d\u003d]\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "{\n  \"type\": \"handshake\",\n  \"cookie\": \"gradle-cmake-cookie\",\n  \"protocolVersion\": {\n    \"isExperimental\": true,\n    \"major\": 1,\n    \"minor\": 1\n  },\n  \"sourceDirectory\": \"/Users/dennisshar/MyProjects/BlackDay/app\",\n  \"buildDirectory\": \"/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/arm64-v8a\",\n  \"generator\": \"Ninja\"\n}\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"gradle-cmake-cookie\",\"errorMessage\":\"Failed to activate protocol version: \\\"CMAKE_HOME_DIRECTORY\\\" is set but incompatible with configured source directory value.\",\"inReplyTo\":\"handshake\",\"type\":\"error\"}\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "ERROR",
+    "message": "Failed to activate protocol version: \"CMAKE_HOME_DIRECTORY\" is set but incompatible with configured source directory value.",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "{\n  \"type\": \"configure\",\n  \"cacheArguments\": [\n    \"\",\n    \"-DCMAKE_FIND_ROOT_PATH\\u003d/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/release/prefab/arm64-v8a/prefab\",\n    \"-DCMAKE_BUILD_TYPE\\u003dRelease\",\n    \"-DCMAKE_TOOLCHAIN_FILE\\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake\",\n    \"-DANDROID_ABI\\u003darm64-v8a\",\n    \"-DANDROID_NDK\\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462\",\n    \"-DANDROID_PLATFORM\\u003dandroid-24\",\n    \"-DCMAKE_ANDROID_ARCH_ABI\\u003darm64-v8a\",\n    \"-DCMAKE_ANDROID_NDK\\u003d/Users/dennisshar/Library/Android/sdk/ndk/21.1.6352462\",\n    \"-DCMAKE_EXPORT_COMPILE_COMMANDS\\u003dON\",\n    \"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\\u003d/Users/dennisshar/MyProjects/BlackDay/app/build/intermediates/cmake/release/obj/arm64-v8a\",\n    \"-DCMAKE_MAKE_PROGRAM\\u003d/Users/dennisshar/Library/Android/sdk/cmake/3.10.2.4988404/bin/ninja\",\n    \"-DCMAKE_SYSTEM_NAME\\u003dAndroid\",\n    \"-DCMAKE_SYSTEM_VERSION\\u003d24\"\n  ]\n}\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "{\"cookie\":\"\",\"errorMessage\":\"Waiting for type \\\"handshake\\\".\",\"inReplyTo\":\"configure\",\"type\":\"error\"}\n",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "ERROR",
+    "message": "Waiting for type \"handshake\".",
+    "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
+    "tag": "release|arm64-v8a"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed with problem. Exception: com.android.ide.common.process.ProcessException: Error configuring CMake server (/Users/dennisshar/Library/Android/sdk/cmake/3.10.2.4988404/bin).\r\n",
     "file": "/Users/dennisshar/MyProjects/BlackDay/app/CMakeLists.txt",
     "tag": "release|arm64-v8a"
   }
