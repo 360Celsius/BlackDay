@@ -1,6 +1,7 @@
 package com.bd.blacksky.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,18 @@ class LiveFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUiData()
+        itemsswipetorefresh.setOnRefreshListener {
+            setUiData()
+        }
+
+
+
+
+    }
+
+
+    private fun setUiData(){
         var metric: String? = null
         geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
             if(geoLocation!=null) {
@@ -94,10 +107,11 @@ class LiveFragment : Fragment(), KodeinAware {
                     weekly_weather_view.hasFixedSize()
                     weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List,metric.toString())
                     weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
+
+                    itemsswipetorefresh.isRefreshing = false
                 })
             }
         })
-
 
     }
 
