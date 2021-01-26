@@ -169,7 +169,6 @@
       "project": {
         "compilerSettingsCacheFolder": "/Users/dennisshar/MyProjects/BlackDay/.cxx",
         "cxxFolder": "/Users/dennisshar/MyProjects/BlackDay/.cxx",
-        "ideBuildTargetAbi": "x86",
         "isBuildOnlyTargetAbiEnabled": true,
         "isCmakeBuildCohabitationEnabled": false,
         "isNativeCompilerSettingsCacheEnabled": false,
@@ -193,7 +192,10 @@
     "objFolder": "/Users/dennisshar/MyProjects/BlackDay/app/build/intermediates/cmake/debug/obj",
     "variantName": "debug",
     "validAbiList": [
-      "X86"
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
     ],
     "prefabDirectory": "/Users/dennisshar/MyProjects/BlackDay/app/.cxx/cmake/debug/prefab",
     "prefabPackageDirectoryList": []
