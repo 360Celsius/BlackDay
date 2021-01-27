@@ -82,6 +82,8 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>, met
             binding.date.text = date
             //binding.image.text = image
             binding.image.setAnimation( image )
+            binding.image.playAnimation()
+            binding.image.loop(true)
             binding.temp.text = temp
         }
     }
@@ -124,8 +126,10 @@ class WeeklyWeatherViewAdapter (cryptoUsdData: List<WeeklyDayWeatherEntity>, met
             in 600..622 -> "snow.json"
             in 700..781 -> "fog.json"
             800 -> "sunny.json"
+            801 -> "clouds.json"
             in 800..804 -> "clouds.json"
             else -> ""
         }
+
     }
 }

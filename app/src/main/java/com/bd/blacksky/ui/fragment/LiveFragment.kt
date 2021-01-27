@@ -96,6 +96,8 @@ class LiveFragment : Fragment(), KodeinAware {
                 weather_description.text = currentWeather.main.toString()
                 wind_data.text = currentWeather.wind_speed.toString() + " m/s"
                 weather_animation.setAnimation( getWeatherConditionCode ( currentWeather.weather_id ) )
+                weather_animation.playAnimation()
+                weather_animation.loop(true)
 
 
                 //val currurentWeatherEntityRandomId: Int = currentWeather.current_day_id?.toInt() ?: -1
