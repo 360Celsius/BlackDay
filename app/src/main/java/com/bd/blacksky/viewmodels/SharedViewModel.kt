@@ -9,6 +9,6 @@ class SharedViewModel (
     val data = MutableLiveData<Boolean>()
 
     fun setData(isFinished: Boolean) {
-        data.value = isFinished
+        data.postValue(isFinished)
     }
 }

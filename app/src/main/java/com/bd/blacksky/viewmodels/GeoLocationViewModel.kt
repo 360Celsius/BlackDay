@@ -21,7 +21,7 @@ class GeoLocationViewModel(
             try{
 
                 val geolocationResponse: Response<GeoLocationDataModel> = geoLocationRepository.getGeoLocationFromAPI()
-                //Log.e("test", "GeoLocationViewModel " + geolocationResponse.body()?.country_name.toString())
+                Log.e("test", "GeoLocationViewModel " + geolocationResponse.body()?.country_name.toString())
 
                 val geoLocationEntity: GeoLocationEntity = GeoLocationEntity(
                     0,
@@ -35,7 +35,7 @@ class GeoLocationViewModel(
                     geolocationResponse.body()?.state.toString()
                 )
                 geoLocationRepository.saveGeoLocationToDB(geoLocationEntity)
-                isEventFinishedGeoLocationViewModel.value = true
+                isEventFinishedGeoLocationViewModel.postValue(true)
 
             }catch (e: Exception){
                 Log.e("Coroutines Error", e.toString())

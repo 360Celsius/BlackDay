@@ -13,6 +13,10 @@ interface WeeklyWeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeeklyWeatherToDB(weeklyDayWeatherEntity: WeeklyDayWeatherEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @JvmSuppressWildcards
+    suspend fun bulkInsertWeeklyWeatherToDB(listWeeklyDayWeatherEntity: List<WeeklyDayWeatherEntity>)
+
     @Query("SELECT * FROM weekly_weather_entity WHERE id IN(:id) ")
     fun getWeeklyWeatherFromDB(id: Int): LiveData<List<WeeklyDayWeatherEntity>>
 

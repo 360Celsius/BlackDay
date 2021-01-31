@@ -12,10 +12,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bd.blacksky.R
+import com.bd.blacksky.data.database.entities.CurrentWeatherEntity
+import com.bd.blacksky.data.database.entities.GeoLocationEntity
 import com.bd.blacksky.data.database.entities.WeeklyDayWeatherEntity
 import com.bd.blacksky.databinding.FragmentLiveBinding
 import com.bd.blacksky.ui.viewadapters.WeeklyWeatherViewAdapter
 import com.bd.blacksky.utils.CountriesCodes
+import com.bd.blacksky.utils.Keys
 import com.bd.blacksky.viewmodels.GeoLocationViewModel
 import com.bd.blacksky.viewmodels.WeatherViewModel
 import com.bd.blacksky.viewmodels.factories.GeoLocationViewModelFactory
@@ -54,67 +57,111 @@ class LiveFragment : Fragment(), KodeinAware {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_live, container, false)
         binding.setLifecycleOwner(this)
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUiData()
+        intiDatatoUI()
+        initWeeklyAdapter()
+
         itemsswipetorefresh.setOnRefreshListener {
-            setUiData()
+
+            geoLocationViewModel.getGeoLocation()
+
+            geoLocationViewModel.isEventFinishedGeoLocationViewModel.observe(
+                viewLifecycleOwner,
+                Observer { isEventFinishedGeoLocationViewModel ->
+                    if (isEventFinishedGeoLocationViewModel) {
+                        geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer { geoLocation ->
+                                if (geoLocation != null) {
+                                    if (geoLocation.latitude.toString().equals(CountriesCodes.UNITED_STATES_MINOR_OUTLIYING_ISLANDS.countryCode, true) || geoLocation.latitude.toString().equals(CountriesCodes.UNITED_STATES_OF_AMERICA.countryCode, true) || geoLocation.latitude.toString().equals(CountriesCodes.PALAU.countryCode, true) || geoLocation.latitude.toString().equals(CountriesCodes.BAHAMAS.countryCode, true)) {
+                                        weatherViewModel.getWeather(
+                                            geoLocation?.latitude.toString(),
+                                            geoLocation?.longitude.toString(),
+                                            Keys.apiKeyWeather(),
+                                            "imperial"
+                                        )
+                                    } else {
+                                        weatherViewModel.getWeather(
+                                            geoLocation?.latitude.toString(),
+                                            geoLocation?.longitude.toString(),
+                                            Keys.apiKeyWeather(),
+                                            "metric"
+                                        )
+                                    }
+
+                                }
+                            })
+                    }
+                })
         }
-
-
-
-
     }
 
 
-    private fun setUiData(){
-        var metric: String? = null
+    private fun intiDatatoUI(){
+
+
         geoLocationViewModel.getGeoLocationFromDM().observe(viewLifecycleOwner, Observer {geoLocation ->
             if(geoLocation!=null) {
-                city_name.text = geoLocation.state.toString()
-                country_name.text = geoLocation.country_name.toString()
-                metric = geoLocation.country_code.toString()
-                time_of_day.text = getGreetingMessage()
+                updateLocation(geoLocation)
             }
+
         })
 
         weatherViewModel.getCurrentWeatherFromDB().observe(viewLifecycleOwner, Observer { currentWeather ->
-            if(currentWeather!=null && metric != null){
-                if(metric.equals(CountriesCodes.UNITED_STATES_MINOR_OUTLIYING_ISLANDS.countryCode,true) || metric.equals(
-                        CountriesCodes.UNITED_STATES_OF_AMERICA.countryCode,true)
-                    || metric.equals(CountriesCodes.PALAU.countryCode,true) || metric.equals(CountriesCodes.BAHAMAS.countryCode,true)){
-                    temp.text = currentWeather.temp?.toInt().toString() + "\u2109"
-                }else{
-                    temp.text = currentWeather.temp?.toInt().toString() + "\u00B0"
-                }
+            if(currentWeather!=null){
+                updateCurrentWeather(currentWeather)
 
-                weather_description.text = currentWeather.main.toString()
-                wind_data.text = currentWeather.wind_speed.toString() + " m/s"
-                weather_animation.setAnimation( getWeatherConditionCode ( currentWeather.weather_id ) )
-                weather_animation.playAnimation()
-                weather_animation.loop(true)
-
-
-                //val currurentWeatherEntityRandomId: Int = currentWeather.current_day_id?.toInt() ?: -1
                 weatherViewModel.getAllWeeklyWeatherFromDB().observe(viewLifecycleOwner, Observer { weeklyWeather ->
-                    val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = weeklyWeather.subList(1,5)
-
-                    val layoutManager = LinearLayoutManager(context)
-                    weekly_weather_view.layoutManager = layoutManager
-                    weekly_weather_view.hasFixedSize()
-                    weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List,metric.toString())
-                    weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
-
-                    itemsswipetorefresh.isRefreshing = false
+                    updateWeeklyWeather(weeklyWeather)
                 })
             }
         })
 
+    }
+
+
+    fun updateLocation(geoLocation: GeoLocationEntity){
+        var metric: String? = null
+        city_name.text = geoLocation.state.toString()
+        country_name.text = geoLocation.country_name.toString()
+        metric = geoLocation.country_code.toString()
+        time_of_day.text = getGreetingMessage()
+    }
+
+    fun updateCurrentWeather(currentWeather:CurrentWeatherEntity){
+        var metric: String? = null
+        if(metric.equals(CountriesCodes.UNITED_STATES_MINOR_OUTLIYING_ISLANDS.countryCode,true) || metric.equals(
+                CountriesCodes.UNITED_STATES_OF_AMERICA.countryCode,true)
+            || metric.equals(CountriesCodes.PALAU.countryCode,true) || metric.equals(CountriesCodes.BAHAMAS.countryCode,true)){
+            temp.text = currentWeather.temp?.toInt().toString() + "\u2109"
+        }else{
+            temp.text = currentWeather.temp?.toInt().toString() + "\u00B0"
+        }
+
+        weather_description.text = currentWeather.main.toString()
+        wind_data.text = currentWeather.wind_speed.toString() + " m/s"
+        weather_animation.setAnimation( getWeatherConditionCode ( currentWeather.weather_id ) )
+        weather_animation.playAnimation()
+        weather_animation.loop(true)
+    }
+
+    fun initWeeklyAdapter(){
+        val layoutManager = LinearLayoutManager(context)
+        weekly_weather_view.layoutManager = layoutManager
+        weekly_weather_view.hasFixedSize()
+        weekly_weather_view.addItemDecoration(DividerItemDecoration(context, 0))
+    }
+
+    fun updateWeeklyWeather(weeklyWeather: List<WeeklyDayWeatherEntity>){
+
+        var metric: String? = null
+        val weeklyDayWeatherEntity1List: List<WeeklyDayWeatherEntity> = weeklyWeather.subList(1,5)
+        weekly_weather_view.adapter = WeeklyWeatherViewAdapter(weeklyDayWeatherEntity1List,metric.toString())
+
+        itemsswipetorefresh.isRefreshing = false
     }
 
     fun getGreetingMessage():String{

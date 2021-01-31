@@ -30,6 +30,10 @@ class WeatherRepository(
         blackDayDataBase.getWeeklyWeatherDao().insertWeeklyWeatherToDB(weeklyDayWeatherEntity)
     }
 
+    suspend fun saveBulkWeeklyDayWeatherToDB(listWeeklyDayWeatherEntity: List<WeeklyDayWeatherEntity>){
+        blackDayDataBase.getWeeklyWeatherDao().bulkInsertWeeklyWeatherToDB(listWeeklyDayWeatherEntity)
+    }
+
     fun getWeeklyWeatherFromDM(id: Int): LiveData<List<WeeklyDayWeatherEntity>>{
         return  blackDayDataBase.getWeeklyWeatherDao().getWeeklyWeatherFromDB(id)
     }

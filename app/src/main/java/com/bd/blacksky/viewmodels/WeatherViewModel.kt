@@ -38,6 +38,8 @@ class WeatherViewModel(
 
 
                 val weeklyArraySize: Int? =  weatherResponce.body()?.daily?.size?.minus(1)
+                var weeklyWeatherList: ArrayList<WeeklyDayWeatherEntity> = ArrayList()
+
                 for(i in 0..(weeklyArraySize?:0)){
                     val weeklyDayWeatherEntity: WeeklyDayWeatherEntity = WeeklyDayWeatherEntity(
                             i,
@@ -49,12 +51,13 @@ class WeatherViewModel(
                             weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.main.toString(),
                             weatherResponce.body()?.daily?.get(i)?.weather?.get(0)?.id
                     )
-                    weatherRepository.saveWeeklyDayWeatherToDB(weeklyDayWeatherEntity)
+                    weeklyWeatherList.add(weeklyDayWeatherEntity)
+                    //weatherRepository.saveWeeklyDayWeatherToDB(weeklyDayWeatherEntity)
                 }
+                weatherRepository.saveBulkWeeklyDayWeatherToDB(weeklyWeatherList)
+                isEventFinishedWeatherViewModel.postValue(true)
 
-                isEventFinishedWeatherViewModel.value = true
-
-                //Log.e("test", "WeatherViewModel "+ weatherResponce.body()?.timezone.toString())
+                Log.e("test", "WeatherViewModel "+ weatherResponce.body()?.timezone.toString())
             }catch (e: Exception){
                 Log.e("Coroutines Error", e.toString())
             }
