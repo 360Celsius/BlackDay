@@ -65,6 +65,8 @@ class LiveActivity : AppCompatActivity(), KodeinAware {
     fun AppCompatActivity.replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
+        transaction.
+        transaction.attach(fragment)
         transaction.replace(R.id.fragment_container_activity_live,fragment)
         transaction.addToBackStack(null)
         transaction.commit()
